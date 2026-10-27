@@ -1,10 +1,10 @@
 ﻿"gene","variable","level","n_observed","n_imputed","prop_observed","prop_imputed","m","maxit","method","predictors","logged_events"
-"APC","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.3614649681528662,40,20,"logreg","status, group, age_per1, gender, pathologic_stage_12_34, na_hazard",0
-"BRAF","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.3576433121019108,40,20,"logreg","status, group, age_per1, gender, pathologic_stage_12_34, na_hazard",0
-"BRCA1","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.36194267515923567,40,20,"logreg","status, group, age_per1, gender, pathologic_stage_12_34, na_hazard",0
-"KRAS","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.3587579617834395,40,20,"logreg","status, group, age_per1, gender, pathologic_stage_12_34, na_hazard",0
-"PIK3CA","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.36003184713375797,40,20,"logreg","status, group, age_per1, gender, pathologic_stage_12_34, na_hazard",0
-"TIMP1","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.3630573248407643,40,20,"logreg","status, group, age_per1, gender, pathologic_stage_12_34, na_hazard",0
-"TP53","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.3627388535031847,40,20,"logreg","status, group, age_per1, gender, pathologic_stage_12_34, na_hazard",0
-"ROCK2","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.364171974522293,40,20,"logreg","status, group, age_per1, gender, pathologic_stage_12_34, na_hazard",0
-"MS4A1","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.36242038216560507,40,20,"logreg","status, group, age_per1, gender, pathologic_stage_12_34, na_hazard",0
+"APC","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.3665605095541401,40,20,"logreg","status, group, age_g, gender, pathologic_stage_12_34, na_hazard",0
+"BRAF","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.360828025477707,40,20,"logreg","status, group, age_g, gender, pathologic_stage_12_34, na_hazard",0
+"BRCA1","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.36592356687898087,40,20,"logreg","status, group, age_g, gender, pathologic_stage_12_34, na_hazard",0
+"KRAS","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.3611464968152866,40,20,"logreg","status, group, age_g, gender, pathologic_stage_12_34, na_hazard",0
+"PIK3CA","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.3622611464968153,40,20,"logreg","status, group, age_g, gender, pathologic_stage_12_34, na_hazard",0
+"TIMP1","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.36544585987261147,40,20,"logreg","status, group, age_g, gender, pathologic_stage_12_34, na_hazard",0
+"TP53","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.3673566878980892,40,20,"logreg","status, group, age_g, gender, pathologic_stage_12_34, na_hazard",0
+"ROCK2","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.36671974522292994,40,20,"logreg","status, group, age_g, gender, pathologic_stage_12_34, na_hazard",0
+"MS4A1","cea_g",">5 ng/mL",273,157,0.34798534798534797,0.3660828025477707,40,20,"logreg","status, group, age_g, gender, pathologic_stage_12_34, na_hazard",0

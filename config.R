@@ -37,8 +37,8 @@ cfg <- list(
                               pathologic_stage_12_34 = "I\u2013II"),
 
   # Cox 모형 (04)
-  cox_covariates       = c("age", "gender", "pathologic_stage_12_34", "cea_g"),            # 다변량 보정 변수
-  cox_uni_covariates   = c("age", "gender", "pathologic_stage_12_34", "cea_g"),  # 단변량 표
+  cox_covariates       = c("age_g", "gender", "pathologic_stage_12_34", "cea_g"),            # 다변량 보정 변수
+  cox_uni_covariates   = c("age_g", "gender", "pathologic_stage_12_34", "cea_g"),  # 단변량 표
   covariate_scale      = list(age = list(by = 1, label = "Age (per 1 year)")),    # 연속형 단위
   stage_full           = "stage",                                 # EPV 부족 시 교체될 stage 변수
   stage_collapsed      = "pathologic_stage_12_34",                # 교체 변수 (없으면 stage로 생성)
