@@ -8,7 +8,8 @@
 #   5. 종점별 (첫 번째 = 주 종점): KM + log-rank, 단변량 Cox, 다변량 Cox (EPV),
 #      다변량 + extra_covariate (MMR), 하위군 (pMMR), cox.zph
 #   6. TCGA 결과와 방향 비교 (validates 코호트의 survival_summary_raw.csv)
-# 사용: Rscript 06_external_geo.R [GSE39582 ...]   (인자 없으면 cfg$geo_datasets 전체)
+# 사용: Rscript 06_external_geo.R [GSE39582 ...] [--probe=<probe ID>]   (GSE 인자 없으면 cfg$geo_datasets 전체)
+#   --probe: cfg$geo_probe_rule 대신 지정 probe 사용 (민감도 분석) → 결과는 <GSE>/probe_<ID>/ 하위 폴더
 # 결과 (파일명 앞에 <GSE>_): output/tables/GEO/<GSE>/ (probe_QC, pheno_QC, survival_summary, km_summary, cox_<EP>, ph_tests)
 #       output/figures/GEO/<GSE>/ (km_<EP>, km_<EP>_<하위군>, forest, forest_multi_<EP>)
 # =============================================================
@@ -26,6 +27,9 @@ Sys.setenv(VROOM_CONNECTION_SIZE = 131072 * 64)      # 긴 series matrix 줄 읽
 
 geo_where <- function(gse, key) paste0(" → cfg$geo_datasets$", gse, "$", key)
 ids_txt <- function(x) paste(head(x, 10), collapse = ", ")
+
+geo_probe <- NULL   # --probe=<ID>로 지정 (NULL = cfg$geo_probe_rule)
+geo_subdir <- function(gse) if (is.null(geo_probe)) gse else file.path(gse, paste0("probe_", geo_probe))
 
 # ---- 1. 다운로드 / 캐시 ------------------------------------------------
 
@@ -102,7 +106,13 @@ probe_qc <- function(ex, fd, gene, g, gse) {
   if (!rule %in% names(rules)) {
     stop("cfg$geo_probe_rule = '", rule, "' 지원 안 함 (", paste(names(rules), collapse = ", "), ")")
   }
-  qc$chosen <- seq_len(nrow(qc)) == which.max(qc[[rules[[rule]]]])
+  if (!is.null(geo_probe)) {
+    if (!geo_probe %in% probes) stop(gse, ": --probe=", geo_probe, "는 ", gene, " probe가 아님 (", paste(probes, collapse = ", "), ")")
+    rule <- "forced"
+    qc$chosen <- qc$probe_id == geo_probe
+  } else {
+    qc$chosen <- seq_len(nrow(qc)) == which.max(qc[[rules[[rule]]]])
+  }
   if (length(probes) > 1) {
     r <- cor(t(sub), use = "pairwise.complete.obs")
     for (p in probes) qc[[paste0("r_", p)]] <- r[probes, p]
@@ -340,7 +350,7 @@ analyze_endpoint <- function(d, ep, g, gse, gene, pop = "All") {
   title <- paste0(gene, " expression — ", g$label, if (pop != "All") paste0(", ", pop))
   out$files <- c(out$files, suppressMessages(save_fig(
     km_plot(km, de, gene, NULL, p_lr, title = title, ylab = paste(e$label, "probability")),
-    "GEO", paste0("km_", tag), width = 7, height = 6, subdir = gse, prefix = gse)))
+    "GEO", paste0("km_", tag), width = 7, height = 6, subdir = geo_subdir(gse), prefix = gse)))
 
   # ---- Cox 모형들 ----
   cov_terms <- intersect(unname(sapply(cfg$cox_covariates, model_term)), names(de))
@@ -462,10 +472,12 @@ run_geo_validation <- function(gse, cfg_geo) {
 
   # ---- probe 선택 (종양 샘플 기준) ----
   pq <- probe_qc(ex[, d$sample_id, drop = FALSE], fData(eset), gene, g, gse)
-  cat("\n[", gene, " probe] ", nrow(pq), "개, 선택 규칙 cfg$geo_probe_rule = ", cfg$geo_probe_rule, "\n", sep = "")
+  cat("\n[", gene, " probe] ", nrow(pq), "개, 선택 규칙 ",
+      if (is.null(geo_probe)) paste0("cfg$geo_probe_rule = ", cfg$geo_probe_rule) else paste0("--probe = ", geo_probe),
+      "\n", sep = "")
   print(transform(pq, mean = round(mean, 3), median = round(median, 3), IQR = round(IQR, 3), sd = round(sd, 3)),
         row.names = FALSE, digits = 3)
-  created <- c(created, save_table(pq, "GEO", "probe_QC.csv", subdir = gse, prefix = gse))
+  created <- c(created, save_table(pq, "GEO", "probe_QC.csv", subdir = geo_subdir(gse), prefix = gse))
   probe <- pq$probe_id[pq$chosen]
 
   # ---- median split (종양 샘플 전체) ----
@@ -486,7 +498,7 @@ run_geo_validation <- function(gse, cfg_geo) {
   }
   cat("\n[phenotype QC] 종양", nrow(d), "명\n")
   print(pq_tab, right = FALSE, row.names = FALSE)
-  created <- c(created, save_table(pq_tab, "GEO", "pheno_QC.csv", subdir = gse, prefix = gse))
+  created <- c(created, save_table(pq_tab, "GEO", "pheno_QC.csv", subdir = geo_subdir(gse), prefix = gse))
 
   # ---- 생존분석: 종점 × (전체, 하위군) ----
   pops <- list(All = d)
@@ -508,7 +520,7 @@ run_geo_validation <- function(gse, cfg_geo) {
   if (!"p_interaction" %in% names(s)) s$p_interaction <- NA
   s$tcga_multi_hr <- if (is.null(tcga)) NA else tcga$multi_hr
   s$direction_match <- if (is.null(tcga)) NA else sign(log(s$hr)) == sign(log(tcga$multi_hr))
-  created <- c(created, save_table(s, "GEO", "survival_summary_raw.csv", subdir = gse, prefix = gse))
+  created <- c(created, save_table(s, "GEO", "survival_summary_raw.csv", subdir = geo_subdir(gse), prefix = gse))
 
   ep_lab <- vapply(g$endpoints, `[[`, "", "label")
   tab <- data.frame(
@@ -527,7 +539,7 @@ run_geo_validation <- function(gse, cfg_geo) {
                                                              ifelse(s$direction_match, "Yes", "No"))
   tab[[paste0("Exploratory (EPV < ", cfg$epv_min, ")")]] <- s$exploratory
   created <- c(created, save_df_table(
-    tab, "GEO", "survival_summary", landscape = TRUE, font_size = 7, subdir = gse, prefix = gse,
+    tab, "GEO", "survival_summary", landscape = TRUE, font_size = 7, subdir = geo_subdir(gse), prefix = gse,
     caption = paste0(
       "External validation of ", gene, " expression (", group_contrast_label(), ", median split of probe ", probe,
       " within tumors) in ", g$label, ". HR from Cox regression; multivariable models adjusted for ", adjust_text(),
@@ -556,7 +568,7 @@ run_geo_validation <- function(gse, cfg_geo) {
     km_out[[paste0(tm / 12, "-year (95% CI)")]] <- fmt_surv(km[[col]], km[[paste0(col, "_lo")]], km[[paste0(col, "_hi")]])
   }
   km_out$`Log-rank p` <- ifelse(duplicated(paste(km$endpoint, km$population)), "", fmt_p(km$logrank_p))
-  created <- c(created, save_df_table(km_out, "GEO", "km_summary", subdir = gse, prefix = gse,
+  created <- c(created, save_df_table(km_out, "GEO", "km_summary", subdir = geo_subdir(gse), prefix = gse,
                                       caption = paste0("Kaplan–Meier estimates by ", gene, " expression, ",
                                                        g$label, ". NR = not reached.")))
 
@@ -567,13 +579,13 @@ run_geo_validation <- function(gse, cfg_geo) {
     ep  <- sub(" .*$", "", k); pop <- sub("^\\S+ ", "", k)
     stem <- paste0("cox_", ep, if (pop != "All") paste0("_", pop))
     created <- c(created, save_df_table(
-      r$cox, "GEO", stem, subdir = gse, prefix = gse,
+      r$cox, "GEO", stem, subdir = geo_subdir(gse), prefix = gse,
       caption = paste0("Cox regression for ", tolower(ep_lab[[ep]]), ": ", gene, " expression, ", g$label,
                        if (pop != "All") paste0(", ", pop, " only") else "")))
   }
   zph <- bind_rows(lapply(res, `[[`, "zph"))
   created <- c(created, save_table(transform(zph, p = signif(p, 4), chisq = round(chisq, 3)),
-                                   "GEO", "ph_tests.csv", subdir = gse, prefix = gse))
+                                   "GEO", "ph_tests.csv", subdir = geo_subdir(gse), prefix = gse))
   if (any(zph$flag)) {
     fl <- zph[zph$flag, ]
     cat("\ncox.zph p < 0.05:", paste(sprintf("%s/%s %s: %s", fl$endpoint, fl$population, fl$model, fl$term),
@@ -589,7 +601,7 @@ run_geo_validation <- function(gse, cfg_geo) {
   created <- c(created, save_fig(
     forest_plot(ft, paste0(gene, " expression (", group_contrast_label(), ") — ", g$label),
                 paste0("Probe ", probe, "; multivariable models adjusted for ", adjust_text())),
-    "GEO", "forest", width = 13, height = 1.6 + 0.35 * nrow(ft), subdir = gse, prefix = gse))
+    "GEO", "forest", width = 13, height = 1.6 + 0.35 * nrow(ft), subdir = geo_subdir(gse), prefix = gse))
 
   # 전체 공변량 forest (종점별, 가장 많이 보정한 모형)
   for (ep in names(g$endpoints)) {
@@ -598,16 +610,19 @@ run_geo_validation <- function(gse, cfg_geo) {
     created <- c(created, save_fig(
       forest_plot(fo$tab, paste0(fo$name, " Cox: ", ep_lab[[ep]], " — ", g$label),
                   sprintf("n = %d, events = %d, EPV = %.1f", nrow(fo$m$d), fo$m$events, fo$m$epv)),
-      "GEO", paste0("forest_multi_", ep), width = 9, height = 1.6 + 0.35 * nrow(fo$tab), subdir = gse, prefix = gse))
+      "GEO", paste0("forest_multi_", ep), width = 9, height = 1.6 + 0.35 * nrow(fo$tab), subdir = geo_subdir(gse), prefix = gse))
   }
 
-  move_stale_outputs("GEO", c("km_", "forest", "cox_", "zph_"), created, subdir = gse, prefix = gse)
+  move_stale_outputs("GEO", c("km_", "forest", "cox_", "zph_"), created, subdir = geo_subdir(gse), prefix = gse)
   list(files = created, summary = s, probe = pq[pq$chosen, ], tcga = tcga, g = g, d = d)
 }
 
 # ---- 실행 -------------------------------------------------------------
 
 args <- commandArgs(trailingOnly = TRUE)
+probe_arg <- grepl("^--probe=", args)
+if (any(probe_arg)) geo_probe <- sub("^--probe=", "", args[probe_arg][1])
+args <- args[!probe_arg]
 datasets <- if (length(args)) args else names(cfg$geo_datasets)
 unknown <- setdiff(datasets, names(cfg$geo_datasets))
 if (length(unknown)) stop("cfg$geo_datasets에 없는 GSE: ", paste(unknown, collapse = ", "))

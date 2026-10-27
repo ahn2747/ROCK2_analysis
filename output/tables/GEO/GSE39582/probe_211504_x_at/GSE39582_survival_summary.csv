@@ -1,0 +1,17 @@
+﻿"Endpoint","Population","Model","N","Events","HR (95% CI)","p","EPV","Stage variable","PH p (gene term)","Interaction p","Log-rank p","RMST difference at 60 mo, months (95% CI)","RMST p","Direction as TCGA-COAD","Exploratory (EPV < 10)"
+"Overall survival","All","Univariable",562,191,"1.25 (0.94–1.66)","0.130","191.0",,"0.396",,"0.129","-1.14 (-4.14, 1.86)","0.455","No",FALSE
+"Overall survival","All","Univariable, continuous (per 1 log2 unit)",562,191,"1.04 (0.79–1.37)","0.772","191.0",,"0.368",,"","","","No",FALSE
+"Overall survival","All","Multivariable",557,190,"1.18 (0.88–1.57)","0.263","47.5",,"0.464",,"","","","No",FALSE
+"Overall survival","All","Multivariable (MMR status known)",511,175,"1.17 (0.87–1.58)","0.300","43.8",,"0.432",,"","","","No",FALSE
+"Overall survival","All","Multivariable + MMR status",511,175,"1.13 (0.83–1.56)","0.436","35.0",,"0.423","0.032","","","","No",FALSE
+"Overall survival","pMMR","Univariable",444,158,"1.11 (0.80–1.52)","0.536","158.0",,"0.288",,"0.535","0.15 (-3.34, 3.63)","0.935","No",FALSE
+"Overall survival","pMMR","Univariable, continuous (per 1 log2 unit)",444,158,"0.89 (0.64–1.24)","0.504","158.0",,"0.412",,"","","","Yes",FALSE
+"Overall survival","pMMR","Multivariable",440,157,"1.04 (0.75–1.43)","0.827","39.2",,"0.389",,"","","","No",FALSE
+"Relapse-free survival","All","Univariable",557,177,"0.96 (0.72–1.29)","0.793","177.0",,"0.388",,"0.787","0.66 (-3.21, 4.53)","0.738","Yes",FALSE
+"Relapse-free survival","All","Univariable, continuous (per 1 log2 unit)",557,177,"0.98 (0.74–1.30)","0.876","177.0",,"0.603",,"","","","Yes",FALSE
+"Relapse-free survival","All","Multivariable",552,177,"0.98 (0.73–1.32)","0.908","44.2",,"0.347",,"","","","Yes",FALSE
+"Relapse-free survival","All","Multivariable (MMR status known)",506,167,"1.02 (0.75–1.38)","0.893","41.8",,"0.718",,"","","","No",FALSE
+"Relapse-free survival","All","Multivariable + MMR status",506,167,"0.88 (0.64–1.20)","0.403","33.4",,"0.648","0.814","","","","Yes",FALSE
+"Relapse-free survival","pMMR","Univariable",439,157,"0.83 (0.61–1.14)","0.257","157.0",,"0.747",,"0.256","3.18 (-1.35, 7.71)","0.169","Yes",FALSE
+"Relapse-free survival","pMMR","Univariable, continuous (per 1 log2 unit)",439,157,"0.80 (0.58–1.12)","0.190","157.0",,"0.383",,"","","","Yes",FALSE
+"Relapse-free survival","pMMR","Multivariable",435,157,"0.87 (0.63–1.19)","0.374","39.2",,"0.654",,"","","","Yes",FALSE
