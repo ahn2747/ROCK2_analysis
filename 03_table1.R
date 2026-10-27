@@ -3,6 +3,7 @@
 # Table 1: 유전자 발현 그룹(Low/High)별 임상 특성 + 전체 코호트 요약
 #   - 연속형: median [IQR], Wilcoxon rank-sum
 #   - 범주형: chi-square (기대빈도 < 5 셀이 있으면 Fisher's exact로 자동 전환)
+#             + 모든 범주형 변수의 Fisher's exact p를 별도 열로 추가 (민감도 확인용)
 #   - 결측은 "Missing" 행으로 표시, p-value 계산에서는 제외
 # 입력: data/processed/<CANCER>_merged.rds
 # 결과 (파일명 앞에 <CANCER>_): output/tables/<CANCER>/table1_<GENE>.{docx,csv}, table1_overall.{docx,csv}
@@ -20,28 +21,48 @@ suppressPackageStartupMessages({
 # 선택된 검정명은 test_log에 기록 → CSV의 Test 열
 test_log <- new.env()
 
+obs_table <- function(data, variable, by) {
+  d <- data[!is.na(data[[variable]]) & !is.na(data[[by]]), ]
+  table(droplevels(factor(d[[variable]])), droplevels(factor(d[[by]])))
+}
+
+# 큰 분할표에서 정확 검정 메모리 초과 시 Monte Carlo로 대체 (seed 고정)
+fisher_p <- function(tab) {
+  tryCatch(
+    data.frame(p.value = fisher.test(tab, workspace = 2e8)$p.value,
+               method = "Fisher's exact test"),
+    error = function(e) {
+      set.seed(2026)
+      data.frame(p.value = fisher.test(tab, simulate.p.value = TRUE, B = 1e5)$p.value,
+                 method = "Fisher's exact test (Monte Carlo, B = 100,000)")
+    }
+  )
+}
+
 test_chisq_fisher <- function(data, variable, by, ...) {
-  d   <- data[!is.na(data[[variable]]) & !is.na(data[[by]]), ]
-  tab <- table(droplevels(factor(d[[variable]])), droplevels(factor(d[[by]])))
+  tab <- obs_table(data, variable, by)
   res <- if (nrow(tab) < 2 || ncol(tab) < 2) {
     data.frame(p.value = NA_real_, method = "Not tested (single category)")
   } else if (all(suppressWarnings(chisq.test(tab, correct = FALSE)$expected) >= 5)) {
     data.frame(p.value = chisq.test(tab, correct = FALSE)$p.value,
                method = "Pearson's chi-squared test")
   } else {
-    # 큰 분할표에서 정확 검정 메모리 초과 시 Monte Carlo로 대체 (seed 고정)
-    tryCatch(
-      data.frame(p.value = fisher.test(tab, workspace = 2e8)$p.value,
-                 method = "Fisher's exact test"),
-      error = function(e) {
-        set.seed(2026)
-        data.frame(p.value = fisher.test(tab, simulate.p.value = TRUE, B = 1e5)$p.value,
-                   method = "Fisher's exact test (Monte Carlo, B = 100,000)")
-      }
-    )
+    fisher_p(tab)
   }
   assign(variable, res$method, envir = test_log)
   res
+}
+
+# ---- 범주형 전체: Fisher's exact p (별도 열, 기대빈도와 무관하게 항상 계산) ----
+# Monte Carlo로 대체된 변수는 fisher_log에 기록 → 열 머리 각주
+fisher_log <- new.env()
+
+stat_fisher <- function(data, variable, by, ...) {
+  tab <- obs_table(data, variable, by)
+  if (nrow(tab) < 2 || ncol(tab) < 2) return(tibble(p.fisher = NA_real_))
+  res <- fisher_p(tab)
+  if (res$method != "Fisher's exact test") assign(variable, res$method, envir = fisher_log)
+  tibble(p.fisher = res$p.value)
 }
 
 # 표의 각 행에 대응하는 검정명 (변수 라벨 행에만)
@@ -111,14 +132,25 @@ for (cancer in cfg$cancers) {
                 group_ref(), sum(d[[grp]] == group_ref()), group_alt(), sum(d[[grp]] == group_alt())))
 
     rm(list = ls(test_log), envir = test_log)
+    rm(list = ls(fisher_log), envir = fisher_log)
     tbl <- make_summary(d, vars, by = grp) |>
       add_p(test = list(all_continuous() ~ "wilcox.test",
                         all_categorical() ~ test_chisq_fisher),
             pvalue_fun = label_style_pvalue(digits = 3)) |>
+      add_stat(fns = all_categorical() ~ stat_fisher) |>
+      modify_header(p.fisher = "**Fisher's exact p**") |>
+      modify_fmt_fun(p.fisher ~ label_style_pvalue(digits = 3)) |>
       add_overall(last = FALSE) |>
       modify_spanning_header(c(stat_1, stat_2) ~ paste0("**", gene, " expression**")) |>
       modify_caption(paste0("Table 1. Clinical characteristics of TCGA-", cancer,
                             " patients by ", gene, " expression"))
+    mc <- ls(fisher_log)
+    if (length(mc)) {
+      tbl <- modify_footnote_header(tbl, paste0("Monte Carlo simulation (B = 100,000) for: ",
+                                                paste(ifelse(mc %in% names(var_labels), var_labels[mc], mc),
+                                                      collapse = ", ")),
+                                    columns = p.fisher)
+    }
     created <- c(created, save_tbl(tbl, cancer, paste0("table1_", gene)))
 
     # ---- 층화 변수(기본 TSS) × 발현 그룹 (배치/기관 효과 점검) ----
