@@ -69,3 +69,9 @@
 "Tumor free","198 (48.2%)"
 "With tumor","213 (51.8%)"
 "Missing","46"
+"family_history_colorectal_cancer",
+"0","332 (85.1%)"
+"1","47 (12.1%)"
+"2","9 (2.3%)"
+"3","2 (0.5%)"
+"Missing","67"

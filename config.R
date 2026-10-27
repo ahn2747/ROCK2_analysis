@@ -21,7 +21,7 @@ cfg <- list(
                   "pathologic_stage_12_34", "cea_g",
                   "lymphovascular_invasion_indicator", "vascular_invasion_indicator",
                   "residual_tumor", "histologic_diagnosis",
-                  "anatomic_neoplasm_subdivision", "tumor_status", "family_history"),
+                  "anatomic_neoplasm_subdivision", "tumor_status", "family_history_colorectal_cancer"),
   table1_continuous = c("age"),            # Table 1에서 연속형으로 요약할 변수 (median [IQR], Wilcoxon)
   # 분석에서 결측(NA)으로 처리할 값 (01 recode_clinical; 03 이후 모든 분석에 적용)
   analysis_na_values = list(residual_tumor = "RX"),   # RX = 잔존 종양 평가 불가
