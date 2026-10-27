@@ -12,6 +12,7 @@ cran_pkgs <- c(
   "gtsummary", "flextable", "officer",                                 # 03 Table 1
   "survival", "survminer", "ggplot2", "ggpubr", "forestmodel",         # 04 생존분석
   "survRM2", "jsonlite", "ggrepel",                                    # 04 RMST, 01 manifest, 05 volcano
+  "mice", "broom",                                                     # 04b 다중대체
   "msigdbr", "BiocManager"                                             # 05 GSEA
 )
 bioc_pkgs <- c(

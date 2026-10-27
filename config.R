@@ -39,11 +39,16 @@ cfg <- list(
   # Cox 모형 (04)
   cox_covariates       = c("age", "gender", "pathologic_stage_12_34", "cea_g"),            # 다변량 보정 변수
   cox_uni_covariates   = c("age", "gender", "pathologic_stage_12_34", "cea_g"),  # 단변량 표
-  covariate_scale      = list(age = list(by = 1, label = "Age (per 10 years)")),  # 연속형 단위
+  covariate_scale      = list(age = list(by = 1, label = "Age (per 1 year)")),    # 연속형 단위
   stage_full           = "stage",                                 # EPV 부족 시 교체될 stage 변수
   stage_collapsed      = "pathologic_stage_12_34",                # 교체 변수 (없으면 stage로 생성)
   epv_min              = 10,               # 다변량 Cox EPV 기준 (미만 → stage 병합, 그래도 미만 → 탐색적)
   min_events           = 10,               # 유전자별 생존분석 최소 사건 수 (미만이면 건너뜀)
+
+  # 다중대체 (04b): 대체할 공변량만 지정, 나머지 공변량 결측은 완전사례로 제외
+  mi_vars              = c("cea_g"),       # mice로 대체할 변수 (이진 factor → logreg)
+  mi_m                 = 40,               # 대체 데이터셋 수 (결측 사례 비율 % 이상 권장)
+  mi_maxit             = 20,               # mice 반복 수
 
   # 층화 / 기관 효과
   strata_var           = "tss",            # 04 민감도 strata(), 03 TSS × 그룹 교차표
@@ -178,6 +183,8 @@ cfg$geo_datasets <- list(
     ),
     factor_levels = list(mmr_status = c("pMMR", "dMMR")),   # 첫 번째 = 기준 수준
     extra_covariate = "mmr_status",            # 다변량 + 이 변수 (TCGA에 MSI 결과가 없어서 교란 확인용)
-    subgroup = list(var = "mmr_status", level = "pMMR")     # 이 하위군에서 KM/Cox 반복
+    subgroup = list(var = "mmr_status", level = "pMMR"),    # 이 하위군에서 KM/Cox 반복
+    # 다변량 보정 변수 (없으면 cfg$cox_covariates). age_g = 나이 > 65 vs ≤ 65 (TCGA age_g와 같은 cutoff)
+    cox_covariates = c("age_g", "gender", "pathologic_stage_12_34")
   )
 )

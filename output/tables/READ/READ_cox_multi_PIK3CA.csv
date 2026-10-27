@@ -1,7 +1,7 @@
 ﻿"Variable","Level","N","Events","HR (95% CI)","p","Overall p"
 "PIK3CA expression","Low (ref)",51,9,"Reference",,
 "","High",52,4,"0.53 (0.15–1.82)","0.312",
-"Age (per 10 years)","",103,13,"1.09 (1.02–1.17)","0.012",
+"Age (per 1 year)","",103,13,"1.09 (1.02–1.17)","0.012",
 "Sex","Male (ref)",62,9,"Reference",,
 "","Female",41,4,"0.72 (0.20–2.54)","0.611",
 "Pathologic stage group","I–II (ref)",50,5,"Reference",,

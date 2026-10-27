@@ -1,7 +1,7 @@
 ﻿"Variable","Level","N","Events","HR (95% CI)","p","Overall p"
 "TP53 expression","Low (ref)",50,6,"Reference",,
 "","High",52,6,"1.03 (0.31–3.46)","0.957",
-"Age (per 10 years)","",102,12,"1.12 (1.04–1.21)","0.004",
+"Age (per 1 year)","",102,12,"1.12 (1.04–1.21)","0.004",
 "Sex","Male (ref)",61,8,"Reference",,
 "","Female",41,4,"0.63 (0.17–2.38)","0.498",
 "Pathologic stage group","I–II (ref)",50,5,"Reference",,

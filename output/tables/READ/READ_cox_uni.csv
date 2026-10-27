@@ -29,7 +29,7 @@
 "MS4A1 expression","Low (ref)",78,18,"Reference",,
 "","High",78,7,"0.32 (0.13–0.77)","0.011",
 "MS4A1 expression, log2 (per 1 unit)","",156,25,"0.83 (0.68–1.01)","0.065",
-"Age (per 10 years)","",157,25,"1.09 (1.04–1.14)","<0.001",
+"Age (per 1 year)","",157,25,"1.09 (1.04–1.14)","<0.001",
 "Sex","Male (ref)",88,13,"Reference",,
 "","Female",69,12,"1.18 (0.54–2.60)","0.678",
 "Pathologic stage group","I–II (ref)",79,7,"Reference",,

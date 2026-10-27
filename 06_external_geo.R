@@ -30,6 +30,7 @@ ids_txt <- function(x) paste(head(x, 10), collapse = ", ")
 
 geo_probe <- NULL   # --probe=<ID>로 지정 (NULL = cfg$geo_probe_rule)
 geo_subdir <- function(gse) if (is.null(geo_probe)) gse else file.path(gse, paste0("probe_", geo_probe))
+geo_covariates <- function(g) g$cox_covariates %||% cfg$cox_covariates   # 데이터셋별 다변량 보정 변수
 
 # ---- 1. 다운로드 / 캐시 ------------------------------------------------
 
@@ -219,6 +220,10 @@ recode_geo <- function(d, g, gse) {
   # 나이
   d$age <- num_field(d, "age", g, gse)
   if (any(d$age < 0 | d$age > 120, na.rm = TRUE)) stop(gse, ": 나이 값 이상 (0–120 아님)")
+  # 연령군: TCGA age_g 규칙의 cutoff (나이 > cutoff = 비교군). GEO 나이는 소수점이 있어서 라벨은 "≤65" / ">65"
+  cut <- rules_for(g$validates)$age_g$cutoff
+  lv  <- c(paste0("≤", cut), paste0(">", cut))
+  d$age_g <- factor(ifelse(d$age > cut, lv[2], lv[1]), levels = lv)
 
   # 성별 (기준 수준: cfg$reference_levels)
   d$gender <- factor(str_to_title(d$gender))
@@ -353,7 +358,7 @@ analyze_endpoint <- function(d, ep, g, gse, gene, pop = "All") {
     "GEO", paste0("km_", tag), width = 7, height = 6, subdir = geo_subdir(gse), prefix = gse)))
 
   # ---- Cox 모형들 ----
-  cov_terms <- intersect(unname(sapply(cfg$cox_covariates, model_term)), names(de))
+  cov_terms <- intersect(unname(sapply(geo_covariates(g), model_term)), names(de))
   labs <- term_labels(c("group", "expr_log2", cov_terms, g$extra_covariate, cfg$stage_collapsed), gene)
   rows <- list(); cox_tabs <- list(); zph <- list()
 
@@ -542,7 +547,7 @@ run_geo_validation <- function(gse, cfg_geo) {
     tab, "GEO", "survival_summary", landscape = TRUE, font_size = 7, subdir = geo_subdir(gse), prefix = gse,
     caption = paste0(
       "External validation of ", gene, " expression (", group_contrast_label(), ", median split of probe ", probe,
-      " within tumors) in ", g$label, ". HR from Cox regression; multivariable models adjusted for ", adjust_text(),
+      " within tumors) in ", g$label, ". HR from Cox regression; multivariable models adjusted for ", adjust_text(geo_covariates(g)),
       if (!is.null(g$extra_covariate)) paste0("; '+ ", model_label_extra(g), "' additionally adjusts for ",
                                               tolower(model_label_extra(g)), " and '(", model_label_extra(g),
                                               " known)' is the model without it on the same patients") else "",
@@ -600,7 +605,7 @@ run_geo_validation <- function(gse, cfg_geo) {
     shape = ifelse(fs$exploratory, "exploratory", "est"))
   created <- c(created, save_fig(
     forest_plot(ft, paste0(gene, " expression (", group_contrast_label(), ") — ", g$label),
-                paste0("Probe ", probe, "; multivariable models adjusted for ", adjust_text())),
+                paste0("Probe ", probe, "; multivariable models adjusted for ", adjust_text(geo_covariates(g)))),
     "GEO", "forest", width = 13, height = 1.6 + 0.35 * nrow(ft), subdir = geo_subdir(gse), prefix = gse))
 
   # 전체 공변량 forest (종점별, 가장 많이 보정한 모형)

@@ -1,7 +1,7 @@
 ﻿"Variable","Level","N","Events","HR (95% CI)","p","Overall p"
 "KRAS expression","Low (ref)",48,10,"Reference",,
 "","High",54,3,"0.25 (0.06–0.94)","0.041",
-"Age (per 10 years)","",102,13,"1.09 (1.02–1.17)","0.012",
+"Age (per 1 year)","",102,13,"1.09 (1.02–1.17)","0.012",
 "Sex","Male (ref)",61,9,"Reference",,
 "","Female",41,4,"0.73 (0.21–2.59)","0.626",
 "Pathologic stage group","I–II (ref)",50,5,"Reference",,

@@ -28,7 +28,7 @@ term_labels <- function(terms, gene = NULL) {
   setNames(labs, terms)
 }
 
-# 캡션용 보정 변수 목록 (cfg$cox_covariates → "age (per 10 years), sex and pathologic stage")
+# 캡션용 보정 변수 목록 (cfg$cox_covariates → "age (per 1 year), sex and pathologic stage")
 adjust_text <- function(covariates = cfg$cox_covariates) {
   labs <- tolower(unname(term_labels(unname(sapply(covariates, model_term)))))
   if (length(labs) < 2) return(paste(labs, collapse = ""))
