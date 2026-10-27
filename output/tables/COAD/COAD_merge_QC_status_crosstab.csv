@@ -1,0 +1,13 @@
+﻿"file","csv_status","sav_status","Freq"
+"COAD_50_50_MS4A1.csv","Alive","0",342
+"COAD_50_50_MS4A1.csv","Dead","0",0
+"COAD_50_50_MS4A1.csv","Alive","1",0
+"COAD_50_50_MS4A1.csv","Dead","1",97
+"COAD_50_50_MS4A1.csv","Alive",,0
+"COAD_50_50_MS4A1.csv","Dead",,1
+"COAD_50_50_ROCK2.csv","Alive","0",342
+"COAD_50_50_ROCK2.csv","Dead","0",0
+"COAD_50_50_ROCK2.csv","Alive","1",0
+"COAD_50_50_ROCK2.csv","Dead","1",97
+"COAD_50_50_ROCK2.csv","Alive",,0
+"COAD_50_50_ROCK2.csv","Dead",,1

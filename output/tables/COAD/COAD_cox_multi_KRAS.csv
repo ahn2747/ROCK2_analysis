@@ -1,0 +1,10 @@
+﻿"Variable","Level","N","Events","HR (95% CI)","p","Overall p"
+"KRAS expression","Low (ref)",150,26,"Reference",,
+"","High",123,23,"1.19 (0.67–2.10)","0.549",
+"Age (per 10 years)","",273,49,"1.04 (1.01–1.06)","0.002",
+"Sex","Male (ref)",141,23,"Reference",,
+"","Female",132,26,"1.18 (0.66–2.09)","0.575",
+"Pathologic stage group","I–II (ref)",151,16,"Reference",,
+"","III–IV",122,33,"4.10 (2.11–7.99)","<0.001",
+"Pretreatment CEA","≤5 ng/mL (ref)",178,21,"Reference",,
+"",">5 ng/mL",95,28,"2.16 (1.21–3.84)","0.009",

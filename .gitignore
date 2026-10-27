@@ -1,0 +1,9 @@
+# 원본·가공 데이터 (환자 데이터, 대용량)
+database/*.csv
+database/*.chip
+data/
+
+# R
+.Rhistory
+.RData
+.Rproj.user/

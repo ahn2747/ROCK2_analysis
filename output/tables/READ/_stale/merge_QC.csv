@@ -1,0 +1,3 @@
+﻿"gene","file","action","n_file","n_matched","n_file_not_in_clinical","file_not_in_clinical","status_mismatch","n_compared","expr_identical_pct","expr_correlation","group_identical_pct","n","n_low","n_high","median","n_diff_from_median_split","median_split_pass"
+"MS4A1","READ_50_50_MS4A1.csv","QC only (already in .sav)",158,158,0,"",0,158,100,1,100,158,79,79,15.315000000000001,0,TRUE
+"ROCK2","READ_50_50_ROCK2.csv","QC only (already in .sav)",158,158,0,"",0,158,100,1,100,158,79,79,1429.84,0,TRUE

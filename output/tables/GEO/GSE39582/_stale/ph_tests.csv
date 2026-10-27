@@ -1,0 +1,59 @@
+﻿"endpoint","population","gene","model","term","chisq","df","p","flag"
+"OS","All","ROCK2","Univariable","group",2.074,1,0.1498,FALSE
+"OS","All","ROCK2","Univariable","GLOBAL",2.074,1,0.1498,FALSE
+"OS","All","ROCK2","Univariable, continuous (per 1 log2 unit)","expr_log2",4.359,1,0.0368,TRUE
+"OS","All","ROCK2","Univariable, continuous (per 1 log2 unit)","GLOBAL",4.359,1,0.0368,TRUE
+"OS","All","ROCK2","Multivariable","group",2.31,1,0.1286,FALSE
+"OS","All","ROCK2","Multivariable","age_per10",1.223,1,0.2687,FALSE
+"OS","All","ROCK2","Multivariable","gender",0.347,1,0.556,FALSE
+"OS","All","ROCK2","Multivariable","stage",3.226,3,0.3581,FALSE
+"OS","All","ROCK2","Multivariable","GLOBAL",7.089,6,0.3127,FALSE
+"OS","All","ROCK2","Multivariable (MMR status known)","group",3.168,1,0.07511,FALSE
+"OS","All","ROCK2","Multivariable (MMR status known)","age_per10",0.86,1,0.3538,FALSE
+"OS","All","ROCK2","Multivariable (MMR status known)","gender",0.523,1,0.4696,FALSE
+"OS","All","ROCK2","Multivariable (MMR status known)","stage",2.647,3,0.4494,FALSE
+"OS","All","ROCK2","Multivariable (MMR status known)","GLOBAL",7.002,6,0.3207,FALSE
+"OS","All","ROCK2","Multivariable + MMR status","group",3.192,1,0.07399,FALSE
+"OS","All","ROCK2","Multivariable + MMR status","age_per10",0.891,1,0.3452,FALSE
+"OS","All","ROCK2","Multivariable + MMR status","gender",0.484,1,0.4868,FALSE
+"OS","All","ROCK2","Multivariable + MMR status","stage",2.644,3,0.4498,FALSE
+"OS","All","ROCK2","Multivariable + MMR status","mmr_status",1.29,1,0.2561,FALSE
+"OS","All","ROCK2","Multivariable + MMR status","GLOBAL",8.105,7,0.3234,FALSE
+"OS","pMMR","ROCK2","Univariable","group",2.877,1,0.08988,FALSE
+"OS","pMMR","ROCK2","Univariable","GLOBAL",2.877,1,0.08988,FALSE
+"OS","pMMR","ROCK2","Univariable, continuous (per 1 log2 unit)","expr_log2",6.075,1,0.01371,TRUE
+"OS","pMMR","ROCK2","Univariable, continuous (per 1 log2 unit)","GLOBAL",6.075,1,0.01371,TRUE
+"OS","pMMR","ROCK2","Multivariable","group",3.048,1,0.08084,FALSE
+"OS","pMMR","ROCK2","Multivariable","age_per10",1.01,1,0.3149,FALSE
+"OS","pMMR","ROCK2","Multivariable","gender",1.175,1,0.2785,FALSE
+"OS","pMMR","ROCK2","Multivariable","stage",3.38,3,0.3366,FALSE
+"OS","pMMR","ROCK2","Multivariable","GLOBAL",8.038,6,0.2353,FALSE
+"RFS","All","ROCK2","Univariable","group",0.027,1,0.8703,FALSE
+"RFS","All","ROCK2","Univariable","GLOBAL",0.027,1,0.8703,FALSE
+"RFS","All","ROCK2","Univariable, continuous (per 1 log2 unit)","expr_log2",1.387,1,0.2389,FALSE
+"RFS","All","ROCK2","Univariable, continuous (per 1 log2 unit)","GLOBAL",1.387,1,0.2389,FALSE
+"RFS","All","ROCK2","Multivariable","group",0.093,1,0.76,FALSE
+"RFS","All","ROCK2","Multivariable","age_per10",0.019,1,0.8901,FALSE
+"RFS","All","ROCK2","Multivariable","gender",5.612,1,0.01784,TRUE
+"RFS","All","ROCK2","Multivariable","stage",0.044,2,0.9782,FALSE
+"RFS","All","ROCK2","Multivariable","GLOBAL",5.913,5,0.3148,FALSE
+"RFS","All","ROCK2","Multivariable (MMR status known)","group",0,1,0.9899,FALSE
+"RFS","All","ROCK2","Multivariable (MMR status known)","age_per10",0.109,1,0.7408,FALSE
+"RFS","All","ROCK2","Multivariable (MMR status known)","gender",4.538,1,0.03315,TRUE
+"RFS","All","ROCK2","Multivariable (MMR status known)","stage",0.029,2,0.9854,FALSE
+"RFS","All","ROCK2","Multivariable (MMR status known)","GLOBAL",4.671,5,0.4573,FALSE
+"RFS","All","ROCK2","Multivariable + MMR status","group",0,1,0.9823,FALSE
+"RFS","All","ROCK2","Multivariable + MMR status","age_per10",0.109,1,0.7418,FALSE
+"RFS","All","ROCK2","Multivariable + MMR status","gender",4.266,1,0.03889,TRUE
+"RFS","All","ROCK2","Multivariable + MMR status","stage",0.07,2,0.9655,FALSE
+"RFS","All","ROCK2","Multivariable + MMR status","mmr_status",2.26,1,0.1328,FALSE
+"RFS","All","ROCK2","Multivariable + MMR status","GLOBAL",6.337,6,0.3865,FALSE
+"RFS","pMMR","ROCK2","Univariable","group",0.088,1,0.7667,FALSE
+"RFS","pMMR","ROCK2","Univariable","GLOBAL",0.088,1,0.7667,FALSE
+"RFS","pMMR","ROCK2","Univariable, continuous (per 1 log2 unit)","expr_log2",1.609,1,0.2047,FALSE
+"RFS","pMMR","ROCK2","Univariable, continuous (per 1 log2 unit)","GLOBAL",1.609,1,0.2047,FALSE
+"RFS","pMMR","ROCK2","Multivariable","group",0.137,1,0.7108,FALSE
+"RFS","pMMR","ROCK2","Multivariable","age_per10",0.001,1,0.9789,FALSE
+"RFS","pMMR","ROCK2","Multivariable","gender",4.802,1,0.02843,TRUE
+"RFS","pMMR","ROCK2","Multivariable","stage",0.025,2,0.9877,FALSE
+"RFS","pMMR","ROCK2","Multivariable","GLOBAL",5.055,5,0.4092,FALSE

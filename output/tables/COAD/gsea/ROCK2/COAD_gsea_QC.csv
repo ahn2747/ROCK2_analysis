@@ -1,0 +1,2 @@
+﻿"gene","cancer","n_matched","n_only_clinical","n_only_counts","n_low","n_high","spearman_gdc_vs_sav","median_split_agreement_pct","gene_rank","gene_rank_pct","gene_log2FC","n_genes_tested","n_de_padj05","n_ranked","n_symbols_remapped"
+"ROCK2","COAD",438,1,4,219,219,0.9181,88.6,1,0.006,0.835,17744,9762,17732,313

@@ -1,0 +1,67 @@
+﻿"Characteristic","N = 170"
+"Age, years","66.0 [57.0, 72.0]"
+"Missing","1"
+"Age group, years",
+"≤65","83 (49.1%)"
+"≥66","86 (50.9%)"
+"Missing","1"
+"Sex",
+"Male","92 (54.4%)"
+"Female","77 (45.6%)"
+"Missing","1"
+"Pathologic stage",
+"I","33 (20.2%)"
+"II","52 (31.9%)"
+"III","52 (31.9%)"
+"IV","26 (16.0%)"
+"Missing","7"
+"Pathologic T",
+"T1","9 (5.4%)"
+"T2","30 (17.9%)"
+"T3","115 (68.5%)"
+"T4","14 (8.3%)"
+"Missing","2"
+"Pathologic N",
+"N0","86 (51.8%)"
+"N1","45 (27.1%)"
+"N2","35 (21.1%)"
+"Missing","4"
+"Pathologic M",
+"M0","130 (85.0%)"
+"M1","23 (15.0%)"
+"Missing","17"
+"Pathologic stage group",
+"I–II","85 (52.1%)"
+"III–IV","78 (47.9%)"
+"Missing","7"
+"Pretreatment CEA",
+"≤5 ng/mL","66 (57.9%)"
+">5 ng/mL","48 (42.1%)"
+"Missing","56"
+"Lymphovascular invasion",
+"No","84 (55.6%)"
+"Yes","67 (44.4%)"
+"Missing","19"
+"Vascular invasion",
+"No","108 (74.0%)"
+"Yes","38 (26.0%)"
+"Missing","24"
+"Residual tumor",
+"R0","127 (87.6%)"
+"R1","2 (1.4%)"
+"R2","11 (7.6%)"
+"RX","5 (3.4%)"
+"Missing","25"
+"Histology",
+"Rectal Adenocarcinoma","150 (92.0%)"
+"Rectal Mucinous Adenocarcinoma","13 (8.0%)"
+"Missing","7"
+"Tumor site",
+"Rectosigmoid Junction","50 (29.9%)"
+"Rectum","112 (67.1%)"
+"Sigmoid Colon","5 (3.0%)"
+"Missing","3"
+"Tumor status",
+"Tumor free","61 (40.4%)"
+"With tumor","90 (59.6%)"
+"Missing","19"

@@ -1,0 +1,8 @@
+﻿"Variable","Level","N","Events","HR (95% CI)","p","Overall p"
+"BRCA1 expression","Low (ref)",75,14,"Reference",,
+"","High",74,9,"0.53 (0.22–1.31)","0.168",
+"Age (per 10 years)","",149,23,"2.29 (1.32–3.97)","0.003",
+"Sex","Male (ref)",83,12,"Reference",,
+"","Female",66,11,"0.87 (0.37–2.07)","0.754",
+"Pathologic stage group","I–II (ref)",78,7,"Reference",,
+"","III–IV",71,16,"2.93 (1.18–7.26)","0.020",

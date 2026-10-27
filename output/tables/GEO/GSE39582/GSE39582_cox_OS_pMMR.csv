@@ -1,0 +1,11 @@
+﻿"Model","Variable","Level","N","Events","HR (95% CI)","p","Overall p"
+"Univariable","ROCK2 expression","Low (ref)",192,73,"Reference",,
+"Univariable","","High",252,85,"0.77 (0.57–1.06)","0.109",
+"Univariable, continuous (per 1 log2 unit)","ROCK2 expression, log2 (per 1 unit)","",444,158,"0.76 (0.60–0.97)","0.030",
+"Multivariable","ROCK2 expression","Low (ref)",189,72,"Reference",,
+"Multivariable","","High",251,85,"0.76 (0.56–1.05)","0.097",
+"Multivariable","Age (per 10 years)","",440,157,"1.03 (1.01–1.04)","<0.001",
+"Multivariable","Sex","Male (ref)",249,92,"Reference",,
+"Multivariable","","Female",191,65,"0.86 (0.62–1.18)","0.349",
+"Multivariable","Pathologic stage group","I–II (ref)",207,59,"Reference",,
+"Multivariable","","III–IV",233,98,"1.91 (1.38–2.65)","<0.001",
